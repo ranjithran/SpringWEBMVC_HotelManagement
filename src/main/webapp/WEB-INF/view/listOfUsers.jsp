@@ -16,7 +16,7 @@
 			<div class="ms-2 me-auto">
 				<div class="fw-bold">${bd.username}</div>
 				${bd.createdTime}
-			</div> <span class="badge "><button type="button" id="${bd.id}"
+			</div> <span class="badge "><button type="button" id="${bd.email}"
 					class="btn btn-danger" onClick="deleteUserBy(this.id)">Delete</button></span>
 		</li>
 	</c:forEach>

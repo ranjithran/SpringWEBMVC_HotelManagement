@@ -8,7 +8,7 @@ public interface UserDetails_DAO {
 	public void addUser(UserDetails ud);
 	public void updateUserDetails(UserDetails ud);
 	public List<UserDetails> listUserDetails();
-	public boolean removeUserDetails(int id);
+	public boolean removeUserDetails(String email);
 	public UserDetails getByUsrnameandpassword(UserDetails ud);
-	public UserDetails getbyId(int id);
+	public UserDetails getbyId(String id);
 }

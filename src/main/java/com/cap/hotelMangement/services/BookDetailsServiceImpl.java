@@ -35,9 +35,15 @@ public class BookDetailsServiceImpl implements BookDetailsService {
 	}
 
 	@Override
-	public boolean delete(int id) {
+	public boolean updateCancelStatus(int id) {
 	
-		return bookingDetails_DAO.delete(id);
+		return bookingDetails_DAO.updateCancelStatus(id);
+	}
+
+	@Override
+	public boolean updateBookingDetails(BookingDetails details) {
+		
+		return bookingDetails_DAO.updateBookingDetails(details);
 	}
 
 }

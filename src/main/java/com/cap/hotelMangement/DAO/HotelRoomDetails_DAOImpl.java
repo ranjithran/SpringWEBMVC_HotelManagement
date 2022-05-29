@@ -51,4 +51,19 @@ public class HotelRoomDetails_DAOImpl implements HotelRoomDetails_DAO {
 		return hotel;
 	}
 
+	@Override
+	public boolean updateById(HotelRoomDetails hrd) {
+		Session session = this.sessionFactory.getCurrentSession();
+		HotelRoomDetails h = session.get(HotelRoomDetails.class, hrd.getId());
+		if (h == null)
+			return false;
+		h.setCost(hrd.getCost());
+		h.setDescrp(hrd.getDescrp());
+		h.setHeading(hrd.getHeading());
+		h.setImgurl(hrd.getImgurl());
+		session.merge(hrd);
+
+		return true;
+	}
+
 }

@@ -9,5 +9,6 @@ public interface BookingDetails_DAO {
 	public void add(BookingDetails bd);
 	public List<BookingDetails> getAll();
 	public List<BookingDetails> getByUserId(UserDetails ud);
-	public boolean delete(int id);
+	public boolean updateCancelStatus(int id);
+	public boolean updateBookingDetails(BookingDetails details);
 }

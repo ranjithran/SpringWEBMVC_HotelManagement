@@ -3,7 +3,6 @@ package com.cap.hotelMangement.Controller;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,13 +50,29 @@ public class HotelRoomDetails_CC {
 
 	@PostMapping(value = "/delteRoom", produces = MediaType.ALL_VALUE)
 	@ResponseBody
-	public String deletRoom(@RequestParam(value = "id") int id,HttpServletResponse reponse) {
+	public String deletRoom(@RequestParam(value = "id") int id, HttpServletResponse reponse) {
 		boolean value = false;
 		try {
 			value = hotelRoomDetailsService.deleteById(id);
 
 		} catch (Exception e) {
-			reponse.setStatus(406, "Delete bookDetails for this room");
+//			reponse.setStatus(406, "Delete bookDetails for this room");
+			throw new DeleteException();
+		}
+		return "" + value;
+	}
+
+	@PostMapping(value = "/updateRoomdetails", produces = MediaType.ALL_VALUE)
+	@ResponseBody
+	public String deletRoom(@ModelAttribute("hotelRoomDetails") HotelRoomDetails hrd, HttpServletResponse reponse) {
+		boolean value = false;
+		try {
+			System.out.println(hrd);
+			value = hotelRoomDetailsService.updateById(hrd);
+
+		} catch (Exception e) {
+//			reponse.setStatus(406, "Delete bookDetails for this room");
+			e.printStackTrace();
 			throw new DeleteException();
 		}
 		return "" + value;

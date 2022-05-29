@@ -26,6 +26,7 @@ public class UserDetailsDAOImpl implements UserDetails_DAO {
 	@Override
 	public void updateUserDetails(UserDetails ud) {
 		Session session = this.sessionFactory.getCurrentSession();
+		System.out.println(ud);
 		session.saveOrUpdate(ud);
 
 	}
@@ -39,9 +40,9 @@ public class UserDetailsDAOImpl implements UserDetails_DAO {
 	}
 
 	@Override
-	public boolean removeUserDetails(int id) {
+	public boolean removeUserDetails(String email) {
 		Session session = this.sessionFactory.getCurrentSession();
-		UserDetails ud = session.get(UserDetails.class, id);
+		UserDetails ud = session.get(UserDetails.class, email);
 		if (ud == null)
 			return false;
 		session.delete(ud);
@@ -53,15 +54,15 @@ public class UserDetailsDAOImpl implements UserDetails_DAO {
 		Session session = this.sessionFactory.getCurrentSession();
 
 		Query<UserDetails> query = session
-				.createQuery("from UserDetails	 where username=:usrname and password=:pass", UserDetails.class);
-		query.setParameter("usrname", ud.getUsername());
+				.createQuery("from UserDetails	 where email=:usrname and password=:pass", UserDetails.class);
+		query.setParameter("usrname", ud.getEmail());
 		query.setParameter("pass", ud.getPassword());
 		System.out.println("--->" + query);
 		List<UserDetails> uds = query.list();
 
 		if (uds.size() > 0) {
 			for (UserDetails userDetails : uds) {
-				if (userDetails.getUsername().equals(ud.getUsername())
+				if (userDetails.getEmail().equals(ud.getEmail())
 						&& userDetails.getPassword().equals(ud.getPassword())) {
 					return userDetails;
 
@@ -72,7 +73,7 @@ public class UserDetailsDAOImpl implements UserDetails_DAO {
 	}
 
 	@Override
-	public UserDetails getbyId(int id) {
+	public UserDetails getbyId(String id) {
 		Session session = this.sessionFactory.getCurrentSession();
 		UserDetails ud = session.get(UserDetails.class, id);
 		return ud;

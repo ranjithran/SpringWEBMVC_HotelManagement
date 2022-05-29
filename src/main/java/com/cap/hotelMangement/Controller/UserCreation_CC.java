@@ -1,6 +1,7 @@
 package com.cap.hotelMangement.Controller;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,10 +34,14 @@ public class UserCreation_CC {
 
 	@Autowired
 	UserDetailsService userDetailsService;
-	@Autowired
-	HotelRoomDetailsService hotelRoomDetailsService;
+
 	@Autowired
 	ApplicationContext appCxt;
+
+	@GetMapping("/CreatePage")
+	public String navigateToCreatePage() {
+		return "UserCreation_Page";
+	}
 
 	@PostMapping("/create")
 	public ModelAndView createAccount(@ModelAttribute("User") UserDetails uc) {
@@ -53,34 +58,36 @@ public class UserCreation_CC {
 	public String login(@ModelAttribute("User") UserDetails uc, HttpServletRequest request, Model model) {
 		uc = userDetailsService.checkLogin(uc);
 		if (uc != null) {
-			model.addAttribute("userId", uc.getId());
-			request.getSession().setAttribute("User", uc);
+			model.addAttribute("userId", uc.getEmail());
 			if (uc.isAdmin()) {
-				return adminLogic(model);
+				return adminLogic(model, uc);
 			} else {
 				return userLogic(model, uc);
 			}
 		}
-		model.addAttribute("error", "Worng UserName and Password");
+		model.addAttribute("error", "Worng UserName an	q	d Password");
 		return "index";
-	}
-
-	@GetMapping("/CreatePage")
-	public String navigateToCreatePage() {
-		return "UserCreation_Page";
 	}
 
 	@PostMapping(value = "deleteUser", produces = MediaType.ALL_VALUE)
 	@ResponseBody
-	public String deleteUserbyId(@RequestParam(value = "id") int id) {
+	public String deleteUserbyId(@RequestParam(value = "id") String email) {
 		Boolean value = false;
 		try {
-			value = userDetailsService.removeUserDetails(id);
-			
+			value = userDetailsService.removeUserDetails(email);
+
 		} catch (Exception e) {
 			throw new DeleteException();
 		}
 		return "done :" + value;
+	}
+
+	@PostMapping(value = "update")
+	public String UpdateUser(@ModelAttribute("User") UserDetails uc, Model model) {
+
+		userDetailsService.updateUserDetails(uc);
+		settingMainAttributes(model, uc);
+		return "UserLanding_Page";
 	}
 
 	@GetMapping("/logout")
@@ -104,29 +111,42 @@ public class UserCreation_CC {
 		model.addAttribute("bootstrapcss", css);
 	}
 
-	private String adminLogic(Model model) {
-		model.addAttribute("Room", "active");
-		List<HotelRoomDetails> hrds = hotelRoomDetailsService.getAll();
-		BookDetailsService bookDetailsService = (BookDetailsService) appCxt.getBean(BookDetailsService.class);
-		List<BookingDetails> bds = bookDetailsService.getAll();
-		List<UserDetails> ud = userDetailsService.listUserDetails();
-		model.addAttribute("BookingDetails", bds);
-		model.addAttribute("UserDetails", ud);
-		model.addAttribute("HotelRoomDetails", hrds);
-		model.addAttribute("usertype", "admin");
+	private String adminLogic(Model model, UserDetails uc) {
+
+		settingMainAttributes(model, uc);
 		return "AdminLanding_Page";
 	}
 
 	private String userLogic(Model model, UserDetails ud) {
 
-		List<HotelRoomDetails> hrds = hotelRoomDetailsService.getAll();
+		settingMainAttributes(model, ud);
+		return "UserLanding_Page";
+	}
+
+	private void settingMainAttributes(Model model, UserDetails uc) {
+
+		HotelRoomDetailsService hotelRoomDetailsService = (HotelRoomDetailsService) appCxt
+				.getBean(HotelRoomDetailsService.class);
 		BookDetailsService bookDetailsService = (BookDetailsService) appCxt.getBean(BookDetailsService.class);
-		List<BookingDetails> bds = bookDetailsService.getByUserId(ud);
+		List<HotelRoomDetails> hrds = hotelRoomDetailsService.getAll();
+		List<BookingDetails> bds = new ArrayList<>();
+		if (uc.isAdmin()) {
+			List<UserDetails> uds = userDetailsService.listUserDetails();
+			model.addAttribute("UserDetails", uds);
+			bds = bookDetailsService.getAll();
+			model.addAttribute("Room", "active");
+			model.addAttribute("usertype", "admin");
+		} else {
+
+			model.addAttribute("usertype", "user");
+			model.addAttribute("Home", "active");
+			bds = bookDetailsService.getByUserId(uc);
+			model.addAttribute("User", uc);
+		}
+
+		model.addAttribute("HotelRoomDetails", hrds);
 		model.addAttribute("BookingDetails", bds);
 		model.addAttribute("HotelRoomDetails", hrds);
-		model.addAttribute(ud);
-		model.addAttribute("Home", "active");
-		model.addAttribute("usertype", "user");
-		return "UserLanding_Page";
+
 	}
 }

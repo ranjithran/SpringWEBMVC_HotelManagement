@@ -7,9 +7,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
-${bootstrapjs} 
-${bootstrapcss}
+<title>Insert title here</title> ${bootstrapjs} ${bootstrapcss}
 </head>
 <body>
 	<div class="container">
@@ -29,7 +27,20 @@ ${bootstrapcss}
 								placeholder="Enter user name">
 						</div>
 					</div>
-
+					<div class=" form-group row">
+						<label for="lastName" class="col-sm-2 col-form-label">E-Mail</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" name="email"
+								placeholder="Enter E-mail">
+						</div>
+					</div>
+					<div class=" form-group row">
+						<label for="lastName" class="col-sm-2 col-form-label">Phone Number</label>
+						<div class="col-sm-7">
+							<input type="text" class="form-control" name="phonenumber"
+								placeholder="Enter Phone Number">
+						</div>
+					</div>
 					<div class="form-group row">
 						<label for="lastName" class="col-sm-2 col-form-label">Passwrod</label>
 						<div class="col-sm-7">

@@ -38,8 +38,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	@Override
-	public boolean removeUserDetails(int id) {
-		return userDetails_DAO.removeUserDetails(id);
+	public boolean removeUserDetails(String email) {
+		return userDetails_DAO.removeUserDetails(email);
 
 	}
 
@@ -56,7 +56,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	@Override
-	public UserDetails getbyId(int id) {
+	public UserDetails getbyId(String id) {
 		
 		return userDetails_DAO.getbyId(id);
 	}

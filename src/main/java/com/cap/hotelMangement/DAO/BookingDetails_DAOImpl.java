@@ -1,5 +1,6 @@
 package com.cap.hotelMangement.DAO;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -32,23 +33,42 @@ public class BookingDetails_DAOImpl implements BookingDetails_DAO {
 	@Override
 	public List<BookingDetails> getByUserId(UserDetails ud) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Query<BookingDetails> q = session.createQuery("from BookingDetails where userdetails_id=:uid",
-				BookingDetails.class);
-		q.setParameter("uid", ud.getId());
+		Query<BookingDetails> q = session.createQuery("from BookingDetails where email=:uid", BookingDetails.class);
+		q.setParameter("uid", ud.getEmail());
 
 		return q.list();
 	}
 
 	@Override
-	public boolean delete(int id) {
+	public boolean updateCancelStatus(int id) {
 		Session session = this.sessionFactory.getCurrentSession();
 
 		BookingDetails ud = session.get(BookingDetails.class, id);
+
 		if (ud == null)
 			return false;
-		session.delete(ud);
+		ud.setCancled(true);
+		session.update(ud);
 		return true;
 
+	}
+
+	@Override
+	public boolean updateBookingDetails(BookingDetails details) {
+		Session session = this.sessionFactory.getCurrentSession();
+
+		BookingDetails ud = session.get(BookingDetails.class, details.getId());
+
+		if (ud == null)
+			return false;
+		ud.setFromDate(details.getFromDate());
+		ud.setToDate(details.getToDate());
+		ud.setCancled(details.getCancled());
+		long val=new Date().getTime();
+		String val2=ud.getUserdetails().getUsername();
+		ud.setUpdateby(val+ "-->"+val2 );
+		session.update(ud);
+		return true;
 	}
 
 }

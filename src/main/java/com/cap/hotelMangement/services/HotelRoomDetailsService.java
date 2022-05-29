@@ -11,4 +11,5 @@ public interface HotelRoomDetailsService {
 
 	public boolean deleteById(int id);
 	public HotelRoomDetails getbyId(int id);
+	public boolean updateById(HotelRoomDetails hrd);
 }

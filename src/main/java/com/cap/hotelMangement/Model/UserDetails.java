@@ -15,22 +15,45 @@ import javax.persistence.TemporalType;
 @Table(name = "UserDetails")
 public class UserDetails {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	@Column
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@Id
+	@Column(unique = true)
+	private String email;
 	@Column
 	private String username;
 	@Column
 	private String password;
 	@Column(name = "isAdmin", nullable = false)
 	private boolean admin;
-	
+
 	@Column(name = "isUser", nullable = false)
 	private boolean user;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdTime;
+
+	@Column(unique = true)
+	private String phonenumber;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getPhonenumber() {
+		return phonenumber;
+	}
+
+	public void setPhonenumber(String phonenumber) {
+		this.phonenumber = phonenumber;
+	}
 
 	public Date getCreatedTime() {
 		return createdTime;
@@ -57,12 +80,12 @@ public class UserDetails {
 		this.user = user;
 	}
 
-	public int getId() {
-		return id;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUsername() {
@@ -83,7 +106,7 @@ public class UserDetails {
 
 	@Override
 	public String toString() {
-		return "UserDetails [id=" + id + ", username=" + username + ", password=" + password + "]";
+		return "UserDetails [Email=" + email + ", username=" + username + ", password=" + password + "]";
 	}
 
 }

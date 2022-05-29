@@ -40,5 +40,11 @@ public class HotelRoomDetailsServiceImp implements HotelRoomDetailsService{
 		
 		return hoteDetails_DAO.getbyId(id);
 	}
- 
+
+	@Override
+	public boolean updateById(HotelRoomDetails hrd) {
+		
+		return hoteDetails_DAO.updateById(hrd);
+	}
+	
 }

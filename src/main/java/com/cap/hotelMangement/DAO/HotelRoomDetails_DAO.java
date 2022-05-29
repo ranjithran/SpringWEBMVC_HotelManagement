@@ -12,4 +12,5 @@ public interface HotelRoomDetails_DAO {
 
 	public boolean deleteById(int id);
 	public HotelRoomDetails getbyId(int id);
+	public boolean updateById(HotelRoomDetails hrd);
 }

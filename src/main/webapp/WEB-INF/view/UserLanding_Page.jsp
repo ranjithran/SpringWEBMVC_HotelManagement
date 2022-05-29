@@ -37,9 +37,14 @@ ${bootstrapjs} ${bootstrapcss}
 					aria-controls="home" aria-selected="true">Home</button>
 			</li>
 			<li class="nav-item" role="presentation">
+				<button class="nav-link" id="Booking-tab" data-bs-toggle="tab"
+					data-bs-target="#Booking" type="button" role="tab"
+					aria-controls="Booking" aria-selected="false">Booking History</button>
+			</li>
+			<li class="nav-item" role="presentation">
 				<button class="nav-link" id="profile-tab" data-bs-toggle="tab"
 					data-bs-target="#profile" type="button" role="tab"
-					aria-controls="profile" aria-selected="false">Booking History</button>
+					aria-controls="profile" aria-selected="false">Profile Details</button>
 			</li>
 			
 		</ul>
@@ -50,9 +55,15 @@ ${bootstrapjs} ${bootstrapcss}
 					<jsp:param name="roomdetails" value="${roomDetails}" />
 				</jsp:include>
 			</div>
+			<div class="tab-pane fade" id="Booking" role="tabpanel"
+				aria-labelledby="Booking-tab">
+				<jsp:include page='listofBookings.jsp'>
+					<jsp:param name="rd" value="" />
+				</jsp:include>
+			</div>
 			<div class="tab-pane fade" id="profile" role="tabpanel"
 				aria-labelledby="profile-tab">
-				<jsp:include page='listofBookings.jsp'>
+				<jsp:include page='UserProfileEdit.jsp'>
 					<jsp:param name="rd" value="" />
 				</jsp:include>
 			</div>

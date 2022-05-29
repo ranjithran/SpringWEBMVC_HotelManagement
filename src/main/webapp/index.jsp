@@ -38,8 +38,8 @@
 									method="post">
 									<div class="form-outline form-white mb-4">
 										<input type="text" class="form-control form-control-lg"
-											name="username" /> <label class="form-label"
-											for="typeEmailX">UserName</label>
+											name="email" /> <label class="form-label"
+											for="typeEmailX">email</label>
 									</div>
 
 									<div class="form-outline form-white mb-4">

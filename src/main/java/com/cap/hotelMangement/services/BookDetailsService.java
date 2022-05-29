@@ -12,5 +12,7 @@ public interface BookDetailsService {
 
 	public List<BookingDetails> getByUserId(UserDetails ud);
 
-	public boolean delete(int id);
+	public boolean updateCancelStatus(int id);
+
+	public boolean updateBookingDetails(BookingDetails details);
 }
